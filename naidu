@@ -4,46 +4,46 @@ pipeline {
     stages {
         stage('Fetch Code') {
             steps {
-                echo 'Fetching code from repository...'
-                // Replace with your Git repository URL
+                
                 git branch: 'main', url: 'https://github.com/gopitanniru4444/gopi.git'
             }
         }
 
         stage('Build') {
             steps {
-                echo 'Building the application with Maven...'
-                // Maven build command (adjust if necessary)
+                
                 sh 'mvn clean install'
             }
+             post {
+                success {
+            echo 'archiving now'
+
+            // Archive the build artifacts (e.g., .jar or .war files)
+            archiveArtifacts artifacts: '**/*.war'
+        }
+        failure {
+            echo 'Build, Test, or Checkstyle failed!'
+        }
+    }
+
+
+
         }
 
         stage('Test') {
             steps {
-                echo 'Running unit tests with Maven...'
-                // Maven test command
+                
                 sh 'mvn test'
             }
         }
 
         stage('Checkstyle') {
             steps {
-                echo 'Running Checkstyle code analysis...'
-                // Maven checkstyle plugin execution
+                
                 sh 'mvn checkstyle:checkstyle'
             }
         }
     }
 
-    post {
-        success {
-            echo 'Build, Test, and Checkstyle completed successfully!'
-
-            // Archive the build artifacts (e.g., .jar or .war files)
-            archiveArtifacts artifacts: '**/target/*.jar', allowEmptyArchive: true
-        }
-        failure {
-            echo 'Build, Test, or Checkstyle failed!'
-        }
-    }
+   
 }
