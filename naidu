@@ -6,7 +6,7 @@ pipeline {
             steps {
                 echo 'Fetching code from repository...'
                 // Replace with your Git repository URL
-                git branch: 'main', url: 'https://your-repo-url.git'
+                git branch: 'main', url: 'https://github.com/gopitanniru4444/gopi/blob/main/naidu.git'
             }
         }
 
